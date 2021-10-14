@@ -1,0 +1,67 @@
+body {
+    margin: 0;
+}
+
+.app {
+    text-align: center;
+    padding: 10px;
+}
+
+.tw-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: flex-start;
+}
+
+h1 {
+    font-size: large;
+}
+
+
+button,
+input {
+    margin-left: 5px;
+}
+
+input[type="text"] {
+    width: 200px;
+}
+
+label {
+    color: #333333;
+    font-weight: 800;
+}
+
+.tw-box {
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+    border: 1px solid #999;
+}
+
+.tw-filter {
+    display: flex;
+    justify-items: flex-start;
+}
+
+.tw-input-box {
+    display: flex;
+    justify-items: flex-start;
+}
+
+.tw-card {
+    display: flex;
+    margin: 0 10px;
+    font-size: 12px;
+    justify-content: space-between;
+}
+
+.tw-btn-delete {
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+}
+
