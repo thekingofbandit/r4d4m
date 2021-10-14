@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import "./styles/global.scss";
-import {Box, Input} from "./components";
+import {Box} from "./components";
 import {getLocalStorage, hexToRgb, rgbToHsl, saveToLocalStorage, filterColor} from "./utils";
 
 const App = () => {
@@ -143,41 +143,47 @@ const App = () => {
     };
 
     return (
-        <div className="app">
-            <h1>Gallery of colored squares</h1>
-            <form className="tw-input-box" onSubmit={(e) => onSubmit(e)}>
-                <label>Add new color:</label>
-                <input
-                    type="text"
-                    name="color"
-                    value={value}
-                    onChange={(e) => setValue(e.target.value)}
-                    placeholder="Example #333333"
-                    required></input>
-                <button type="submit">Add</button>
-            </form>
-            <hr className="solid"></hr>
-            <div className="tw-filter">
-                <input type="checkbox" checked={filter.r} onChange={(e) => filterRed(e)}></input>
-                <label>{"Red >50%"}</label>
-                <input type="checkbox" checked={filter.g} onChange={(e) => filterGreen(e)}></input>
-                <label>{"Green >50%"}</label>
-                <input type="checkbox" checked={filter.b} onChange={(e) => filterBlue(e)}></input>
-                <label>{"Blue >50%"}</label>
-                <input type="checkbox" checked={filter.s} onChange={(e) => filterSaturation(e)}></input>
-                <label>{"Saturation >50%"}</label>
+        <div className='row between-xs'>
+
+            <div className="app col-xs-12 col-sm-8 col-md-12 col-lg-4">
+                <h1>Gallery of colored squares</h1>
+                <form className="tw-input-box" onSubmit={(e) => onSubmit(e)}>
+                    <label>Add new color:</label>
+                    <input
+                        type="text"
+                        name="color"
+                        value={value}
+                        onChange={(e) => setValue(e.target.value)}
+                        placeholder="Example #333333"
+                        required></input>
+                    <button type="submit">Add</button>
+                </form>
+                <hr className="solid"></hr>
+                <div className="tw-filter">
+                    <input type="checkbox" checked={filter.r} onChange={(e) => filterRed(e)}></input>
+                    <label>{"Red >50%"}</label>
+                    <input type="checkbox" checked={filter.g} onChange={(e) => filterGreen(e)}></input>
+                    <label>{"Green >50%"}</label>
+                    <input type="checkbox" checked={filter.b} onChange={(e) => filterBlue(e)}></input>
+                    <label>{"Blue >50%"}</label>
+                    <input type="checkbox" checked={filter.s} onChange={(e) => filterSaturation(e)}></input>
+                    <label>{"Saturation >50%"}</label>
+                </div>
+                <hr className="solid"></hr>
+                <div className="tw-container">
+                    {colors.map((a : data, i : number) => (<Box
+                        key={a.id}
+                        color={a.hex}
+                        rgb={a.rgb}
+                        hsl={a.hsl}
+                        index={a.id}
+                        toDelete={toDelete}
+                        showButton={a.id > 19}/>))}
+                </div>
             </div>
-            <hr className="solid"></hr>
-            <div className="tw-container">
-                {colors.map((a : data, i : number) => (<Box
-                    key={a.id}
-                    color={a.hex}
-                    rgb={a.rgb}
-                    hsl={a.hsl}
-                    index={a.id}
-                    toDelete={toDelete}/>))}
-            </div>
+
         </div>
+
     );
 };
 

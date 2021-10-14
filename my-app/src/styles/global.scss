@@ -1,3 +1,9 @@
+@import "./variables/main.scss";
+@import "./mixins/main.scss";
+@import "grid";
+@import "visibility"; // Visibility last for precedence
+
+
 body {
     margin: 0;
 }
@@ -33,11 +39,16 @@ label {
     font-weight: 800;
 }
 
+.tw-box-container {
+    border: solid 1px #c5c5c5;
+    border-radius: 3px;
+    box-shadow: 5px 10px #fafafa;
+}
+
 .tw-box {
     width: 100px;
     height: 100px;
-    margin: 5px;
-    border: 1px solid #999;
+    margin: 10px;
 }
 
 .tw-filter {

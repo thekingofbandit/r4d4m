@@ -22,7 +22,7 @@ interface d {
     s : number;
     l : number;
 }
-interface filter {
+interface f {
     r : boolean,
     g : boolean,
     b : boolean,
@@ -662,26 +662,29 @@ export const rgbToHsl = (r : number, g : number, b : number) => {
 };
 
 // filter color hex, filter r,g,b,s
-export const filterColor = (colors : Array < data >, filters : Array < filter >) => {
+export const filterColor = (colors : Array < data >, filters : Array < f >) => {
 
-    console.log(colors);
+    // let val : String = "";
+    let res : Array < data > = [];
+    let keys : Array < String > = [];
 
-    let val : String = "";
+
 
     // loop filter key
     for (var k in filters) {
         if (filters.hasOwnProperty(k)) {
             //  console.log("Key is " + k + ", value is " + filters[k]);
             if (filters[k]) {
-                console.log(k);
+                // val = k;
+                keys.push(k);
 
-                val = k
             }
         }
     }
 
+   
+
     // loop colors
-    let obj : Array < data > = [] || null;
     colors.forEach((a : data, index : number) => {
         const hex = hexToRgb(a.hex);
         const r = hex
@@ -690,77 +693,41 @@ export const filterColor = (colors : Array < data >, filters : Array < filter >)
             ?.g || 0;
         const b = hex
             ?.b || 0;
-        const hsl = rgbToHsl(hex?.r || 0, hex?.g || 0, hex?.b || 0);
+        const hsl = rgbToHsl(hex
+            ?.r || 0, hex
+            ?.g || 0, hex
+            ?.b || 0);
         const s = hsl
             ?.s
 
-            console.log(s)
+       
 
-        // switch
+        if ((keys.includes("r") && r > 127 && hex !== null) || (keys.includes("g") && g > 127 && hex !== null) || (keys.includes("b") && b > 127 && hex !== null) || (keys.includes("s") && s > 50 && hex !== null)) {
 
-        switch (val) {
-            case "r":
-                // if r
-                if (r > 127 && hex !== null) {
-                    obj.push(a)
-                }
+            res.push(a);
 
-                break;
-            case "g":
-                // if r
-                if (g > 127 && hex !== null) {
-                    obj.push(a)
-                }
-
-                break;
-            case "b":
-                // if r
-                if (b > 127 && hex !== null) {
-                    obj.push(a)
-                }
-
-                break;
-            case "s":
-                if (s > 50 && hex !== null) {
-                    obj.push(a)
-                }
-
-                break;
-
-            default:
-                obj = colors
-                break;
         }
 
     });
 
-    console.log(
-        sortByColor(obj));
+    if (keys.length===0) {
+        res  = colors;
+        
+    }
 
-    return obj;
+    return res;
 };
-
-
-
 
 // sortby red > green > blue
 
-const sortByColor = (colors : Array < data >) => {
+export  const sortByColor = (colors : Array < data >) => {
 
-    return colors.sort((a, b) => a.hex.localeCompare(b.hex) || b.id - a.id||b.id - a.id);
+    return colors.sort((a, b) => a.hex.localeCompare(b.hex) || b.id - a.id || b.id - a.id);
 
-//   colors.forEach((a : data, index : number) => {
-//       console.log(a.rgb)
-    
-//   });
+    //   colors.forEach((a : data, index : number) => {       console.log(a.rgb) });
+    //   return colors.sort(function(a, b) {     if (a < b) return -1;     if (a >
+    // b) return 1;     return 0;   });
 
-//   return colors.sort(function(a, b) {
-//     if (a < b) return -1;
-//     if (a > b) return 1;
-//     return 0;
-//   });
-  
 }
-
 
 // chain sort
