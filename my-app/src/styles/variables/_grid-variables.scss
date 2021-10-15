@@ -30,3 +30,8 @@ $breakpoints-all: ($breakpoint-xs-only, $breakpoint-sm-up, $breakpoint-sm-only, 
 $breakpoint-ups: ($breakpoint-sm-up, $breakpoint-md-up, $breakpoint-lg-up, $breakpoint-xl-up);
 $breakpoint-all-prefixes: ("xs", "xs-only", "sm", "sm-only", "md", "md-only", "lg", "lg-only", "xl");
 $breakpoint-up-prefixes: ("xs", "sm", "md", "lg", "xl");
+
+
+// font
+$sl-font-family--display: sans-serif !default;
+$sl-font-family-size--display: 1em !default;

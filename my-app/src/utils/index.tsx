@@ -6,6 +6,8 @@ import {
     rgbToHsl,
     filterColor,
     isAnyTrue,
+    sortByColor,
+    sortRgb,
 } from "./helper";
 
 export {
@@ -15,5 +17,7 @@ export {
     rgbToHex,
     rgbToHsl,
     filterColor,
-    isAnyTrue
+    isAnyTrue,
+    sortByColor,
+    sortRgb
 };

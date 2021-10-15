@@ -1,8 +1,11 @@
 interface data {
-    id : number;
+    id : number
     hex : string;
     rgb : Array < c >;
     hsl : Array < d >;
+    r : number;
+    g : number;
+    b : number;
 }
 
 interface c {
@@ -521,15 +524,11 @@ export const filterColor = (colors : Array < data >, filters : Array < f >, type
     return res;
 };
 
-// sortby red > green > blue
-
-export const sortByColor = (colors : Array < data >) => {
-
-    return colors.sort((a, b) => a.hex.localeCompare(b.hex) || b.id - a.id || b.id - a.id);
-
-    //   colors.forEach((a : data, index : number) => {       console.log(a.rgb) });
-    //   return colors.sort(function(a, b) {     if (a < b) return -1;     if (a >
-    // b) return 1;     return 0;   });
+// sort order red > green > blue sortByColor(['rgb', 'r'],o,true);
+export const sortByColor = (keys : any, arr : Array < data >, isReverse : boolean = false) => {
+    return arr.sort((a, b, v = (c : any) => keys.reduce((o : any, k : any) => o[k] || '', c)) => (isReverse
+        ? -1
+        : 1) * sortByDataString(v(a), v(b)));
 
 }
 
@@ -537,3 +536,61 @@ export const sortByColor = (colors : Array < data >) => {
 export const isAnyTrue = (plotOptions : tplotOptions) => Object
     .keys(plotOptions)
     .every((k) => !plotOptions[k]);
+
+// helpert sort
+const isNumber = (n : any) => {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+// String sorting function
+const sortByDataString = (a : any, b : any) => {
+    if (a === null) {
+        return 1;
+    }
+    if (b === null) {
+        return -1;
+    }
+    if (isNumber(a) && isNumber(b)) {
+        if (parseInt(a, 10) === parseInt(b, 10)) {
+            return 0;
+        }
+        return parseInt(a, 10) > parseInt(b, 10)
+            ? 1
+            : -1;
+    }
+    if (isNumber(a)) {
+        return -1;
+    }
+    if (isNumber(b)) {
+        return 1;
+    }
+    if (a === b) {
+        return 0;
+    }
+    return a > b
+        ? 1
+        : -1;
+}
+
+// sort
+export const sortRgb = (o : any) => {
+
+    let arr = Object
+        .keys(o)
+        .map(function (k) {
+            return {
+                ...o[k],
+                r: o[k].rgb.r,
+                g: o[k].rgb.g,
+                b: o[k].rgb.b
+            }
+        });
+
+    /* console.log(array); */
+    arr.sort(function (a,b) {
+        return  a.r - b.r || a.g - b.g || a.b - b.b;
+    }).reverse();
+
+    return arr;
+
+}

@@ -7,7 +7,8 @@ import {
     rgbToHsl,
     saveToLocalStorage,
     filterColor,
-    isAnyTrue
+    isAnyTrue,
+    sortRgb
 } from "./utils";
 
 const App = () => {
@@ -17,6 +18,9 @@ const App = () => {
         hex : string;
         rgb : Array < c >;
         hsl : Array < d >;
+        r : number;
+        g : number;
+        b : number;
     }
 
     interface c {
@@ -34,7 +38,7 @@ const App = () => {
     const [prevColors,
         setPrevColors] = useState(getLocalStorage("prevColors", 2));
     const [colors,
-        setColors] = useState(getLocalStorage("data", 1));
+        setColors] = useState(sortRgb(getLocalStorage("data", 1)));
     const [value,
         setValue] = useState("");
     const [filter,
@@ -60,25 +64,22 @@ const App = () => {
         setFilter(data);
         saveToLocalStorage("filter", data);
         console.log(isAnyTrue(data));
-        let res;
+        let res : Array < data > = [];
 
-        if (isAnyTrue(data)===true) {
+        if (isAnyTrue(data) === true) {
 
             // set filtered colors
-         res = filterColor(prevColors, data, "r")
-            
-        } else if (isAnyTrue(data)===false) {
+            res = filterColor(prevColors, data, "r")
 
-               // set filtered colors
-         res = filterColor(colors, data, "r")
-            
+        } else if (isAnyTrue(data) === false) {
+
+            // set filtered colors
+            res = filterColor(colors, data, "r")
+
         }
 
-        
-        setColors(res);
-
-        // saveToLocalStorage("data", obj);
-        saveToLocalStorage("data", res);
+        setColors(sortRgb(res));
+        saveToLocalStorage("data", sortRgb(res));
 
     };
 
@@ -90,20 +91,21 @@ const App = () => {
         setFilter(data);
         saveToLocalStorage("filter", data);
         console.log(isAnyTrue(data));
-        let res;
-        if (isAnyTrue(data)===true) {
+        let res : Array < data > = [];
+
+        if (isAnyTrue(data) === true) {
 
             // set filtered colors
-         res = filterColor(prevColors, data, "g")
-            
-        } else if (isAnyTrue(data)===false) {
+            res = filterColor(prevColors, data, "g")
 
-               // set filtered colors
-         res = filterColor(colors, data, "g")
-            
+        } else if (isAnyTrue(data) === false) {
+
+            // set filtered colors
+            res = filterColor(colors, data, "g")
+
         }
-        setColors(res);
-        saveToLocalStorage("data", res);
+        setColors(sortRgb(res));
+        saveToLocalStorage("data", sortRgb(res));
     };
 
     const filterBlue = (e : React.FormEvent < HTMLElement >) => {
@@ -114,20 +116,21 @@ const App = () => {
         setFilter(data);
         saveToLocalStorage("filter", data);
         console.log(isAnyTrue(data));
-        let res;
-        if (isAnyTrue(data)===true) {
+        let res : Array < data > = [];
+
+        if (isAnyTrue(data) === true) {
 
             // set filtered colors
-         res = filterColor(prevColors, data, "b")
-            
-        } else if (isAnyTrue(data)===false) {
+            res = filterColor(prevColors, data, "b")
 
-               // set filtered colors
-         res = filterColor(colors, data, "b")
-            
+        } else if (isAnyTrue(data) === false) {
+
+            // set filtered colors
+            res = filterColor(colors, data, "b")
+
         }
-        setColors(res);
-        saveToLocalStorage("data", res);
+        setColors(sortRgb(res));
+        saveToLocalStorage("data", sortRgb(res));
 
     };
 
@@ -138,20 +141,21 @@ const App = () => {
         };
         setFilter(data);
         saveToLocalStorage("filter", data);
-        let res;
-        if (isAnyTrue(data)===true) {
+        let res : Array < data > = [];
+
+        if (isAnyTrue(data) === true) {
 
             // set filtered colors
-         res = filterColor(prevColors, data, "s")
-            
-        } else if (isAnyTrue(data)===false) {
+            res = filterColor(prevColors, data, "s")
 
-               // set filtered colors
-         res = filterColor(colors, data, "s")
-            
+        } else if (isAnyTrue(data) === false) {
+
+            // set filtered colors
+            res = filterColor(colors, data, "s")
+
         }
-        setColors(res);
-        saveToLocalStorage("data", res);
+        setColors(sortRgb(res));
+        saveToLocalStorage("data", sortRgb(res));
 
     };
 
@@ -203,6 +207,7 @@ const App = () => {
             <div className="app col-xs-12 col-sm-8 col-md-12 col-lg-4">
                 <h1>Gallery of colored squares</h1>
                 <form className="tw-input-box" onSubmit={(e) => onSubmit(e)}>
+
                     <label>Add new color:</label>
                     <input
                         type="text"
@@ -215,14 +220,46 @@ const App = () => {
                 </form>
                 <hr className="solid"></hr>
                 <div className="tw-filter">
-                    <input name="r" type="checkbox" checked={filter.r} onChange={(e) => filterRed(e)}></input>
-                    <label>{"Red >50%"}</label>
-                    <input name="g" type="checkbox" checked={filter.g} onChange={(e) => filterGreen(e)}></input>
-                    <label>{"Green >50%"}</label>
-                    <input name="b" type="checkbox" checked={filter.b} onChange={(e) => filterBlue(e)}></input>
-                    <label>{"Blue >50%"}</label>
-                    <input name="s" type="checkbox" checked={filter.s} onChange={(e) => filterSaturation(e)}></input>
-                    <label>{"Saturation >50%"}</label>
+
+                    <div className='tw-input-container'>
+                        <input
+                            name="r"
+                            type="checkbox"
+                            checked={filter.r}
+                            onChange={(e) => filterRed(e)}></input>
+                        <label>{"Red > 50%"}</label>
+
+                    </div>
+
+                    <div className='tw-input-container'>
+                        <input
+                            name="g"
+                            type="checkbox"
+                            checked={filter.g}
+                            onChange={(e) => filterGreen(e)}></input>
+                        <label>{"Green > 50%"}</label>
+
+                    </div>
+
+                    <div className='tw-input-container'>
+                        <input
+                            name="b"
+                            type="checkbox"
+                            checked={filter.b}
+                            onChange={(e) => filterBlue(e)}></input>
+                        <label>{"Blue > 50%"}</label>
+
+                    </div>
+
+                    <div className='tw-input-container'>
+                        <input
+                            name="s"
+                            type="checkbox"
+                            checked={filter.s}
+                            onChange={(e) => filterSaturation(e)}></input>
+                        <label>{"Saturation > 50%"}</label>
+                    </div>
+
                 </div>
                 <hr className="solid"></hr>
                 <div className="tw-container">
