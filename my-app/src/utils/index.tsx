@@ -4,7 +4,8 @@ import {
     hexToRgb,
     rgbToHex,
     rgbToHsl,
-    filterColor
+    filterColor,
+    isAnyTrue,
 } from "./helper";
 
 export {
@@ -13,5 +14,6 @@ export {
     hexToRgb,
     rgbToHex,
     rgbToHsl,
-    filterColor
+    filterColor,
+    isAnyTrue
 };

@@ -1,7 +1,14 @@
 import React, {useState, useEffect} from "react";
 import "./styles/global.scss";
 import {Box} from "./components";
-import {getLocalStorage, hexToRgb, rgbToHsl, saveToLocalStorage, filterColor} from "./utils";
+import {
+    getLocalStorage,
+    hexToRgb,
+    rgbToHsl,
+    saveToLocalStorage,
+    filterColor,
+    isAnyTrue
+} from "./utils";
 
 const App = () => {
 
@@ -52,9 +59,22 @@ const App = () => {
         };
         setFilter(data);
         saveToLocalStorage("filter", data);
+        console.log(isAnyTrue(data));
+        let res;
 
-        // set filtered colors
-        const res = filterColor(prevColors, data)
+        if (isAnyTrue(data)===true) {
+
+            // set filtered colors
+         res = filterColor(prevColors, data, "r")
+            
+        } else if (isAnyTrue(data)===false) {
+
+               // set filtered colors
+         res = filterColor(colors, data, "r")
+            
+        }
+
+        
         setColors(res);
 
         // saveToLocalStorage("data", obj);
@@ -69,7 +89,19 @@ const App = () => {
         };
         setFilter(data);
         saveToLocalStorage("filter", data);
-        const res = filterColor(prevColors, data)
+        console.log(isAnyTrue(data));
+        let res;
+        if (isAnyTrue(data)===true) {
+
+            // set filtered colors
+         res = filterColor(prevColors, data, "g")
+            
+        } else if (isAnyTrue(data)===false) {
+
+               // set filtered colors
+         res = filterColor(colors, data, "g")
+            
+        }
         setColors(res);
         saveToLocalStorage("data", res);
     };
@@ -81,7 +113,19 @@ const App = () => {
         };
         setFilter(data);
         saveToLocalStorage("filter", data);
-        const res = filterColor(prevColors, data)
+        console.log(isAnyTrue(data));
+        let res;
+        if (isAnyTrue(data)===true) {
+
+            // set filtered colors
+         res = filterColor(prevColors, data, "b")
+            
+        } else if (isAnyTrue(data)===false) {
+
+               // set filtered colors
+         res = filterColor(colors, data, "b")
+            
+        }
         setColors(res);
         saveToLocalStorage("data", res);
 
@@ -94,7 +138,18 @@ const App = () => {
         };
         setFilter(data);
         saveToLocalStorage("filter", data);
-        const res = filterColor(prevColors, data)
+        let res;
+        if (isAnyTrue(data)===true) {
+
+            // set filtered colors
+         res = filterColor(prevColors, data, "s")
+            
+        } else if (isAnyTrue(data)===false) {
+
+               // set filtered colors
+         res = filterColor(colors, data, "s")
+            
+        }
         setColors(res);
         saveToLocalStorage("data", res);
 
@@ -160,13 +215,13 @@ const App = () => {
                 </form>
                 <hr className="solid"></hr>
                 <div className="tw-filter">
-                    <input type="checkbox" checked={filter.r} onChange={(e) => filterRed(e)}></input>
+                    <input name="r" type="checkbox" checked={filter.r} onChange={(e) => filterRed(e)}></input>
                     <label>{"Red >50%"}</label>
-                    <input type="checkbox" checked={filter.g} onChange={(e) => filterGreen(e)}></input>
+                    <input name="g" type="checkbox" checked={filter.g} onChange={(e) => filterGreen(e)}></input>
                     <label>{"Green >50%"}</label>
-                    <input type="checkbox" checked={filter.b} onChange={(e) => filterBlue(e)}></input>
+                    <input name="b" type="checkbox" checked={filter.b} onChange={(e) => filterBlue(e)}></input>
                     <label>{"Blue >50%"}</label>
-                    <input type="checkbox" checked={filter.s} onChange={(e) => filterSaturation(e)}></input>
+                    <input name="s" type="checkbox" checked={filter.s} onChange={(e) => filterSaturation(e)}></input>
                     <label>{"Saturation >50%"}</label>
                 </div>
                 <hr className="solid"></hr>
