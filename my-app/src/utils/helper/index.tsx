@@ -36,12 +36,12 @@ type tplotOptions = {
     [key : string]: boolean
 }
 
-const plotOptions : tplotOptions = {
-    r: true,
-    g: true,
-    b: true,
-    s: true
-}
+// const plotOptions : tplotOptions = {
+//     r: true,
+//     g: true,
+//     b: true,
+//     s: true
+// }
 
 const baseColors = [
     {
